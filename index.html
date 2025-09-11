@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pizza Ordering</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🍕 Pizza Ordering</h1>
+
+    <!-- Customer Info -->
+    <div class="customer-info">
+      <input type="text" id="customer-name" placeholder="Your Name" required />
+      <input type="tel" id="customer-phone" placeholder="Your Phone" required />
+    </div>
+
+    <!-- Menu -->
+    <div id="menu" class="menu"></div>
+
+    <!-- Cart -->
+    <div class="cart">
+      <h2>🛒 Your Cart</h2>
+      <ul id="cart-list"></ul>
+      <p id="total">Total: $0</p>
+      <button id="order-btn">Place Order</button>
+    </div>
+  </div>
+
+
+  <!-- Firebase App -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <!-- Firebase Database -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+  <script src="script.js"></script>
+</body>
+</html>
