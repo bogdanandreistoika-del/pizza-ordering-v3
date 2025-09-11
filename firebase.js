@@ -7,7 +7,7 @@
 
 // Replace with your Firebase project settings:
 const firebaseConfig = {
-  apiKey: "AIzaSyCxILhuDSU6AJq6J-NlYJukb88FX6Rd9X4",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "pizza-ordering-c23f3.firebaseapp.com",
   databaseURL: "https://pizza-ordering-c23f3-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "pizza-ordering-c23f3",
