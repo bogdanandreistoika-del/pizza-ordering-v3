@@ -1,4 +1,3 @@
-// Pizza menu
 const pizzas = [
   { id: 1, name: "Margherita", price: 8 },
   { id: 2, name: "Pepperoni", price: 10 },
@@ -7,98 +6,97 @@ const pizzas = [
   { id: 5, name: "Hawaiian", price: 11 }
 ];
 
-// Cart (still local, only orders are global)
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let cart = [];
+let currentUser = null;
 
+// DOM references
 const menuDiv = document.getElementById("menu");
 const cartList = document.getElementById("cart-list");
 const totalEl = document.getElementById("total");
 const orderBtn = document.getElementById("order-btn");
+
 const nameInput = document.getElementById("customer-name");
 const phoneInput = document.getElementById("customer-phone");
 
-// Render menu
+const loginBtn = document.getElementById("login-btn");
+const logoutBtn = document.getElementById("logout-btn");
+const loginEmail = document.getElementById("login-email");
+const loginPassword = document.getElementById("login-password");
+
+// Render pizza menu
 pizzas.forEach(pizza => {
-  const button = document.createElement("button");
-  button.textContent = `${pizza.name} - $${pizza.price}`;
-  button.onclick = () => addToCart(pizza);
-  menuDiv.appendChild(button);
+  const btn = document.createElement("button");
+  btn.textContent = `${pizza.name} - $${pizza.price}`;
+  btn.onclick = () => addToCart(pizza);
+  menuDiv.appendChild(btn);
 });
 
-// Add pizza to cart
 function addToCart(pizza) {
   const existing = cart.find(item => item.id === pizza.id);
-  if (existing) {
-    existing.quantity++;
-  } else {
-    cart.push({ ...pizza, quantity: 1 });
-  }
-  saveCart();
+  if (existing) existing.quantity++;
+  else cart.push({ ...pizza, quantity: 1 });
   renderCart();
 }
 
-// Remove pizza from cart
 function removeFromCart(pizzaId) {
   cart = cart.filter(item => item.id !== pizzaId);
-  saveCart();
   renderCart();
 }
 
-// Save cart to localStorage
-function saveCart() {
-  localStorage.setItem("cart", JSON.stringify(cart));
-}
-
-// Render cart in UI
 function renderCart() {
   cartList.innerHTML = "";
   let total = 0;
-
   cart.forEach(item => {
     const li = document.createElement("li");
-    li.innerHTML = `
-      ${item.name} x ${item.quantity} - $${item.price * item.quantity}
-      <button onclick="removeFromCart(${item.id})">X</button>
-    `;
+    li.innerHTML = `${item.name} x ${item.quantity} = $${item.price * item.quantity}
+      <button onclick="removeFromCart(${item.id})">X</button>`;
     cartList.appendChild(li);
     total += item.price * item.quantity;
   });
-
   totalEl.textContent = `Total: $${total}`;
 }
 
-// Place order
 orderBtn.addEventListener("click", () => {
-  const name = nameInput.value.trim();
-  const phone = phoneInput.value.trim();
-
-  if (!name || !phone) {
-    alert("Please enter your name and phone.");
+  if (!currentUser) {
+    alert("Please log in first.");
     return;
   }
-
-  if (cart.length === 0) {
-    alert("Your cart is empty!");
+  if (!nameInput.value || !phoneInput.value || cart.length === 0) {
+    alert("Fill in name, phone, and add pizzas.");
     return;
   }
 
   const order = {
-    customer: { name, phone },
-    cart: [...cart],
-    total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
+    customer: { name: nameInput.value, phone: phoneInput.value },
+    cart,
+    total: cart.reduce((s, i) => s + i.price * i.quantity, 0),
     date: new Date().toLocaleString()
   };
 
-  // Save order to Firebase
-  db.ref("orders").push(order);
-
-  alert("Your order has been placed!");
+  db.ref("orders/" + currentUser.uid).set(order);
+  alert("Order saved!");
   cart = [];
-  saveCart();
   renderCart();
-  nameInput.value = "";
-  phoneInput.value = "";
 });
 
-// Render cart on page load
-renderCart();
+// Auth
+loginBtn.addEventListener("click", () => {
+  auth.signInWithEmailAndPassword(loginEmail.value, loginPassword.value)
+    .catch(err => alert(err.message));
+});
+
+logoutBtn.addEventListener("click", () => {
+  auth.signOut();
+});
+
+auth.onAuthStateChanged(user => {
+  if (user) {
+    currentUser = user;
+    loginBtn.style.display = "none";
+    logoutBtn.style.display = "inline";
+  } else {
+    currentUser = null;
+    loginBtn.style.display = "inline";
+    logoutBtn.style.display = "none";
+  }
+});

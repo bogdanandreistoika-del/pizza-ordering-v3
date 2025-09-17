@@ -1,27 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pizza Orders - Admin</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div class="container">
-    <h1>📋 All Pizza Orders</h1>
+<div class="auth">
+  <h2>Admin Login</h2>
+  <input type="email" id="login-email" placeholder="Email" />
+  <input type="password" id="login-password" placeholder="Password" />
+  <button id="login-btn">Login</button>
+  <button id="logout-btn" style="display:none;">Logout</button>
+</div>
 
-    <div class="orders" id="orders-list"></div>
+<h2>Orders</h2>
+<div id="orders-list"></div>
 
-    <button id="clear-orders">Clear All Orders</button>
-    <a href="index.html" style="display:block; text-align:center; margin-top:10px;">⬅ Back to Ordering</a>
-  </div>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 
-
-  <!-- Firebase App -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <!-- Firebase Database -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-  <script src="firebase.js"></script>
-  <script src="orders.js"></script>
-</body>
-</html>
+<script src="firebase.js"></script>
+<script src="orders.js"></script>
