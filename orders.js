@@ -21,29 +21,28 @@ auth.onAuthStateChanged(user => {
     loginBtn.style.display = "none";
     logoutBtn.style.display = "inline";
 
-    // Check if admin
     db.ref("admins/" + user.uid).once("value").then(snapshot => {
       if (snapshot.exists()) {
-        // Admin → load all orders
         db.ref("orders").on("value", snap => {
           const orders = snap.val() || {};
           ordersList.innerHTML = "";
-          Object.values(orders).forEach((order, idx) => {
+          Object.entries(orders).forEach(([id, order], idx) => {
             const div = document.createElement("div");
             div.innerHTML = `
               <h3>Order #${idx + 1}</h3>
-              <p>Name: ${order.customer.name}</p>
-              <p>Phone: ${order.customer.phone}</p>
-              <p>Total: $${order.total}</p>
-              <p>Date: ${order.date}</p>
+              <p><strong>Name:</strong> ${order.customer.name}</p>
+              <p><strong>Phone:</strong> ${order.customer.phone}</p>
+              <p><strong>Total:</strong> $${order.total}</p>
+              <p><strong>Date:</strong> ${order.date}</p>
               <ul>${order.cart.map(i => `<li>${i.name} x ${i.quantity}</li>`).join("")}</ul>
+              <button onclick="deleteOrder('${id}')">Delete</button>
               <hr>
             `;
             ordersList.appendChild(div);
           });
         });
       } else {
-        ordersList.innerHTML = "<p>You are not an admin.</p>";
+        ordersList.innerHTML = "<p>You are not authorized.</p>";
       }
     });
   } else {
@@ -53,3 +52,9 @@ auth.onAuthStateChanged(user => {
     ordersList.innerHTML = "";
   }
 });
+
+function deleteOrder(id) {
+  if (confirm("Delete this order?")) {
+    db.ref("orders/" + id).remove();
+  }
+}
