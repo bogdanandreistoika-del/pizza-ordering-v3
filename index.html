@@ -10,22 +10,28 @@
   <div class="container">
     <h1>🍕 Pizza Ordering</h1>
 
-    <div id="menu" class="menu"></div>
+    <div class="layout">
+      <!-- Pizza menu -->
+      <div id="menu" class="menu"></div>
 
-    <div class="cart">
-      <h2>🛒 Your Cart</h2>
-      <ul id="cart-list"></ul>
-      <p id="total">Total: $0</p>
-      <input type="text" id="customer-name" placeholder="Your Name" />
-      <input type="text" id="customer-phone" placeholder="Your Phone" />
-      <button id="order-btn">Place Order</button>
-    </div>
+      <!-- Right sidebar -->
+      <div class="sidebar">
+        <div class="cart">
+          <h2>🛒 Your Cart</h2>
+          <ul id="cart-list"></ul>
+          <p id="total">Total: $0</p>
+          <input type="text" id="customer-name" placeholder="Your Name" />
+          <input type="text" id="customer-phone" placeholder="Your Phone" />
+          <button id="order-btn">Place Order</button>
+        </div>
 
-    <div class="lookup">
-      <h2>🔍 Find My Order</h2>
-      <input type="text" id="lookup-phone" placeholder="Enter your phone" />
-      <button id="lookup-btn">Find</button>
-      <div id="my-order"></div>
+        <div class="lookup">
+          <h2>🔍 Find My Order</h2>
+          <input type="text" id="lookup-phone" placeholder="Enter your phone" />
+          <button id="lookup-btn">Find</button>
+          <div id="my-order"></div>
+        </div>
+      </div>
     </div>
   </div>
 

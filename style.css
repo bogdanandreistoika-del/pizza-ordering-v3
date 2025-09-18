@@ -1,92 +1,67 @@
 body {
   font-family: Arial, sans-serif;
-  background: #fff8f0;
-  padding: 20px;
   margin: 0;
+  padding: 20px;
+  background: #fafafa;
 }
 
-.container {
-  max-width: 600px;
-  margin: auto;
-}
-
-h1, h2 {
+h1 {
   text-align: center;
 }
 
-.customer-info {
+.layout {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.customer-info input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
 }
 
 .menu {
+  flex: 1;
+  max-width: 600px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 10px;
-  margin-bottom: 20px;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
 }
 
 .menu button {
-  padding: 10px;
-  background: #ff7043;
+  padding: 12px;
+  font-size: 14px;
   border: none;
-  color: white;
-  font-weight: bold;
+  background: #ffcc66;
   border-radius: 8px;
   cursor: pointer;
+  transition: background 0.2s;
 }
 
 .menu button:hover {
-  background: #ff5722;
+  background: #ffaa33;
 }
 
-.cart {
+.sidebar {
+  width: 300px;
+}
+
+.cart, .lookup {
   background: white;
   padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.cart input, .lookup input {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  margin: 8px 0;
+}
+
+button {
+  cursor: pointer;
 }
 
 #cart-list {
   list-style: none;
   padding: 0;
-}
-
-#cart-list li {
-  display: flex;
-  justify-content: space-between;
-  margin: 5px 0;
-}
-
-#cart-list button {
-  background: red;
-  border: none;
-  color: white;
-  padding: 5px 8px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#order-btn {
-  margin-top: 10px;
-  padding: 10px;
-  width: 100%;
-  background: green;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-#order-btn:hover {
-  background: darkgreen;
 }
