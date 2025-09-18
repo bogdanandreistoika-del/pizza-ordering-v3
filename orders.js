@@ -21,20 +21,32 @@ auth.onAuthStateChanged(user => {
     loginBtn.style.display = "none";
     logoutBtn.style.display = "inline";
 
+    // Check if this user is an admin
     db.ref("admins/" + user.uid).once("value").then(snapshot => {
       if (snapshot.exists()) {
+        // Load all orders
         db.ref("orders").on("value", snap => {
           const orders = snap.val() || {};
           ordersList.innerHTML = "";
+
           Object.entries(orders).forEach(([id, order], idx) => {
             const div = document.createElement("div");
+            div.className = "order-card";
             div.innerHTML = `
               <h3>Order #${idx + 1}</h3>
               <p><strong>Name:</strong> ${order.customer.name}</p>
               <p><strong>Phone:</strong> ${order.customer.phone}</p>
               <p><strong>Total:</strong> $${order.total}</p>
               <p><strong>Date:</strong> ${order.date}</p>
-              <ul>${order.cart.map(i => `<li>${i.name} x ${i.quantity}</li>`).join("")}</ul>
+              <ul>
+                ${order.cart
+                  .map(
+                    i =>
+                      `<li>${i.name} (${i.size}) x ${i.quantity} = $${i.price *
+                        i.quantity}</li>`
+                  )
+                  .join("")}
+              </ul>
               <button onclick="deleteOrder('${id}')">Delete</button>
               <hr>
             `;
@@ -42,7 +54,7 @@ auth.onAuthStateChanged(user => {
           });
         });
       } else {
-        ordersList.innerHTML = "<p>You are not authorized.</p>";
+        ordersList.innerHTML = "<p>You are not authorized to view orders.</p>";
       }
     });
   } else {
