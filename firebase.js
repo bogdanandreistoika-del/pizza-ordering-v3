@@ -3,6 +3,7 @@
 // Project id: pizza-ordering-c23f3
 // Project Name: pizza-ordering
 // Project Number: 142060262413
+// orders pass: Bogdan123
 // I think i gonna die but not now
 
 // Replace with your Firebase project settings:
